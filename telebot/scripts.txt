@@ -1,4 +1,0 @@
-python -m venv venv
-venv/Scripts/activate
-pip install python-telegram-bot paho-mqtt --upgrade
-python main.py

@@ -1,0 +1,24 @@
+services:
+  # 1. The MQTT Broker
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mqtt_broker
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  # 2. Your Telegram Bot
+  telegram_bot:
+    build: .
+    container_name: fire_alarm_bot
+    restart: always
+    depends_on:
+      - mosquitto
+    # This line tells Docker to inject variables from .env into the container
+    env_file:
+      - .env
